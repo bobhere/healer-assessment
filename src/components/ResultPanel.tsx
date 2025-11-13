@@ -127,39 +127,54 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
     return html2canvas(target, { scale: 2, backgroundColor: '#ffffff' });
   };
 
+  const withDesktopLayout = async (action: () => Promise<void>) => {
+    const body = document.body;
+    const needsForce = body.classList.contains('mobile-adapt') && !body.classList.contains('force-desktop');
+    if (needsForce) body.classList.add('force-desktop');
+    try {
+      await action();
+    } finally {
+      if (needsForce) body.classList.remove('force-desktop');
+    }
+  };
+
   const handleExportPDF = async () => {
-    const canvas = await captureResultSection();
-    if (!canvas) return;
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'pt', 'a4');
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 20;
-    const usableWidth = pageWidth - margin * 2;
-    const imgHeight = (canvas.height * usableWidth) / canvas.width;
-    let heightLeft = imgHeight;
-    let position = margin;
+    await withDesktopLayout(async () => {
+      const canvas = await captureResultSection();
+      if (!canvas) return;
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 20;
+      const usableWidth = pageWidth - margin * 2;
+      const imgHeight = (canvas.height * usableWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = margin;
 
-    pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
-    heightLeft -= pageHeight - margin;
-
-    while (heightLeft > 0) {
-      pdf.addPage();
-      position = heightLeft - imgHeight + margin;
       pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
       heightLeft -= pageHeight - margin;
-    }
 
-    pdf.save('healer-assessment-report.pdf');
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position = heightLeft - imgHeight + margin;
+        pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
+        heightLeft -= pageHeight - margin;
+      }
+
+      pdf.save('healer-assessment-report.pdf');
+    });
   };
 
   const handleExportImage = async () => {
-    const canvas = await captureResultSection();
-    if (!canvas) return;
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = 'healer-assessment-report.png';
-    link.click();
+    await withDesktopLayout(async () => {
+      const canvas = await captureResultSection();
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'healer-assessment-report.png';
+      link.click();
+    });
   };
 
   return (

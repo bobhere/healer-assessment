@@ -20,6 +20,20 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const updateViewportClass = () => {
+      if (window.innerWidth <= 900) {
+        document.body.classList.add('mobile-adapt');
+      } else {
+        document.body.classList.remove('mobile-adapt');
+        document.body.classList.remove('force-desktop');
+      }
+    };
+    updateViewportClass();
+    window.addEventListener('resize', updateViewportClass);
+    return () => window.removeEventListener('resize', updateViewportClass);
+  }, []);
+
   const handleUnlock = (event: React.FormEvent) => {
     event.preventDefault();
     if (passcode.trim() === '888888') {
