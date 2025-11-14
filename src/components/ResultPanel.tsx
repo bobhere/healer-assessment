@@ -190,10 +190,6 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
         </div>
         <div className="report-meta">
           <div>
-            <span>客户名称</span>
-            <strong>待填写</strong>
-          </div>
-          <div>
             <span>测评日期</span>
             <strong>{new Date().toLocaleDateString()}</strong>
           </div>
