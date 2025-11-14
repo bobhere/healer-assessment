@@ -195,7 +195,7 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
           </div>
           <div>
             <span>顾问</span>
-            <strong>内部教练团队</strong>
+            <strong>虚竹教练团队</strong>
           </div>
         </div>
       </div>
