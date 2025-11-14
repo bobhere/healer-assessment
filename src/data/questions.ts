@@ -39,10 +39,10 @@ export const dimensionMetas: DimensionMeta[] = [
   },
 ];
 
-const scaleOptions = (max = 5) =>
-  Array.from({ length: max }, (_, idx) => ({
-    label: `${idx + 1}`,
-    value: (idx + 1) / max,
+const scaleOptions = (items: string[]) =>
+  items.map((label, idx) => ({
+    label,
+    value: (idx + 1) / items.length,
   }));
 
 const yesNo = [
@@ -63,7 +63,11 @@ const priceOptions = [
   { label: '3万 - 5万', value: 0.85 },
   { label: '1万 - 3万', value: 0.65 },
   { label: '5000 - 1万', value: 0.4 },
-  { label: '<5000', value: 0.2 },
+  { label: '2000 - 5000', value: 0.25 },
+  { label: '1000 - 2000', value: 0.18 },
+  { label: '500 - 1000', value: 0.12 },
+  { label: '200 - 500', value: 0.08 },
+  { label: '<200', value: 0.05 },
 ];
 
 const leadOptions = [
@@ -75,26 +79,38 @@ const leadOptions = [
 
 const revenueOptions = [
   { label: '≥200万/月', value: 1 },
-  { label: '100万 - 200万', value: 0.85 },
-  { label: '50万 - 100万', value: 0.65 },
-  { label: '20万 - 50万', value: 0.45 },
-  { label: '<20万', value: 0.2 },
+  { label: '100万 - 200万', value: 0.9 },
+  { label: '50万 - 100万', value: 0.75 },
+  { label: '20万 - 50万', value: 0.55 },
+  { label: '10万 - 20万', value: 0.4 },
+  { label: '5万 - 10万', value: 0.3 },
+  { label: '3万 - 5万', value: 0.22 },
+  { label: '1万 - 3万', value: 0.15 },
+  { label: '5000 - 1万', value: 0.1 },
+  { label: '3000 - 5000', value: 0.07 },
+  { label: '<3000 / 暂无收入', value: 0.04 },
 ];
 
 export const questions: Question[] = [
   {
     id: 'q1',
-    title: '你的理想客户画像是否细到年龄/职业/典型一天？',
+    title: '你能描述理想客户到“年龄+职业+典型一天”吗？',
     helper: '越具体越好，方便内容和私域直击痛点',
     dimension: 'positioning',
-    type: 'scale',
+    type: 'single',
     weight: 1,
-    options: scaleOptions(),
+    options: [
+      { label: '有名字/头像/家庭背景，都能描述', value: 1 },
+      { label: '能说清年龄、职业、生活习惯', value: 0.75 },
+      { label: '只知道大概年龄段或行业', value: 0.4 },
+      { label: '还没细化，只有“焦虑职场女性”这种描述', value: 0.15 },
+      { label: '没有描述，欢迎帮忙一起梳理', value: 0.05 },
+    ],
   },
   {
     id: 'q2',
-    title: '现在能一句话说清客户买单后的核心变化吗？',
-    helper: '例如：XX人群 → 解决XX问题 → 获得XX转变',
+    title: '一句话价值主张是否已经想好？',
+    helper: '例如“XX人群→解决XX问题→获得XX结果”',
     dimension: 'positioning',
     type: 'boolean',
     weight: 0.9,
@@ -118,29 +134,39 @@ export const questions: Question[] = [
   },
   {
     id: 'q5',
-    title: '交付流程是否有固定节奏＋表单工具？',
-    helper: '比如前测-疗程-复盘的SOP、材料、反馈机制',
+    title: '交付流程做到了哪个程度？',
+    helper: '例如是否有前测、课堂、复盘的SOP和表单',
     dimension: 'product',
-    type: 'scale',
+    type: 'single',
     weight: 0.9,
-    options: scaleOptions(),
+    options: [
+      { label: '每个阶段都有SOP、表单和材料，助理也能执行', value: 1 },
+      { label: '主要流程清楚，但部分环节靠临场发挥', value: 0.75 },
+      { label: '有笔记但没形成固定节奏', value: 0.4 },
+      { label: '完全靠自己临时安排', value: 0.15 },
+    ],
   },
   {
     id: 'q6',
-    title: '过去4周短视频/内容是否保持每周≥3条并做复盘？',
-    helper: '包含完播/私信等数据复盘',
+    title: '内容/短视频近4周的执行情况？',
+    helper: '频率是否稳定、是否看完播/留言等数据',
     dimension: 'shortVideo',
-    type: 'scale',
+    type: 'single',
     weight: 0.9,
-    options: scaleOptions(),
+    options: [
+      { label: '每周≥3条并且每条都复盘数据', value: 1 },
+      { label: '每周1-2条，偶尔复盘', value: 0.65 },
+      { label: '偶尔更新，几乎不看数据', value: 0.25 },
+      { label: '还没开始做内容', value: 0.05 },
+    ],
   },
   {
     id: 'q7',
-    title: '真实案例/客户见证是否够用（不同场景都有）？',
+    title: '真实案例/客户见证是否够用？',
     dimension: 'content',
     type: 'scale',
     weight: 0.8,
-    options: scaleOptions(),
+    options: scaleOptions(['各阶段都有案例+截图', '有几个经典案例', '只有少量短评', '暂时没有，尚在收集']),
   },
   {
     id: 'q8',
