@@ -6,6 +6,7 @@ import type { AnswerValue } from '../store/useAssessmentStore';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { normalizeAnswerValue } from '../utils/scoring';
+import { dimensionMetas } from '../data/questions';
 
 interface ResultPanelProps {
   summary: ScoreSummary;
@@ -456,6 +457,25 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
     return map;
   }, [derivedAnswers]);
 
+  const dimensionSorted = useMemo(() => {
+    if (!summary.dimensionResults.length) return [];
+    return [...summary.dimensionResults].sort((a, b) => a.score - b.score);
+  }, [summary.dimensionResults]);
+
+  const highestDimension = dimensionSorted[dimensionSorted.length - 1];
+  const highestLabel = highestDimension
+    ? `${dimensionMetas.find((meta) => meta.key === highestDimension.key)?.label ?? ''} · ${
+        highestDimension.score
+      }`
+    : '待补充';
+
+  const quickStats = [
+    { label: '完成度', value: `${summary.completion}%`, caption: '问卷进度' },
+    { label: '答题数', value: `${summary.answeredCount}/${summary.totalCount}`, caption: '已填 / 总题' },
+    { label: '平均分', value: summary.dimensionResults.length ? `${summary.average}` : '--', caption: '六维均值' },
+    { label: '最高维度', value: highestLabel, caption: '当前长板' },
+  ];
+
   const scoreboardCards = scoreboardConfig.map((config) => {
     const record = derivedMap[config.id];
     const builder = scoreboardBuilders[config.id];
@@ -604,6 +624,16 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
         </div>
       </header>
 
+      <div className="result-quick-stats">
+        {quickStats.map((stat) => (
+          <div key={stat.caption} className="quick-stat-card">
+            <p>{stat.caption}</p>
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </div>
+        ))}
+      </div>
+
       <div className="panel-block">
         <div className="panel-header">
           <span className="panel-tag">01</span>
@@ -667,9 +697,14 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
         </div>
         <ol className="action-list">
           {actionQueue.length ? (
-            actionQueue.map((item, index) => <li key={item + index}>{item}</li>)
+            actionQueue.map((item, index) => (
+              <li key={`${item}-${index}`}>
+                <span className="action-list__index">{index + 1}</span>
+                <p>{item}</p>
+              </li>
+            ))
           ) : (
-            <li>暂无可执行动作，请先补全问卷信息。</li>
+            <li className="action-list__empty">暂无可执行动作，请先补全问卷信息。</li>
           )}
         </ol>
       </div>
