@@ -50,13 +50,6 @@ const yesNo = [
   { label: '否', value: 0 },
 ];
 
-const frequencyOptions = [
-  { label: '每个作品都记录', value: 1 },
-  { label: '每周复盘一次', value: 0.75 },
-  { label: '偶尔记录', value: 0.4 },
-  { label: '基本不记录', value: 0.1 },
-];
-
 const conversionOptions = [
   { label: '≥60%', value: 1 },
   { label: '40% - 59%', value: 0.8 },
@@ -71,13 +64,6 @@ const priceOptions = [
   { label: '5000 - 1万', value: 0.55 },
   { label: '2000 - 5000', value: 0.3 },
   { label: '<2000', value: 0.15 },
-];
-
-const caseOptions = [
-  { label: '10个以上', value: 1 },
-  { label: '4 - 9个', value: 0.75 },
-  { label: '1 - 3个', value: 0.45 },
-  { label: '暂无', value: 0.1 },
 ];
 
 const videoFrequency = [
@@ -95,37 +81,12 @@ const leadOptions = [
   { label: '无清晰路径', value: 0.1 },
 ];
 
-const budgetOptions = [
-  { label: '≥3万/月', value: 1 },
-  { label: '1万-3万', value: 0.75 },
-  { label: '5000-1万', value: 0.5 },
-  { label: '1000-5000', value: 0.3 },
-  { label: '<1000', value: 0.1 },
-];
-
-const dataToolOptions = [
-  { label: '专业BI（如DataStudio、Looker）', value: 1 },
-  { label: '在线表格/飞书多维表', value: 0.75 },
-  { label: '手工Excel', value: 0.45 },
-  { label: '未追踪', value: 0.1 },
-];
-
-const teamOptions = [
-  { code: 'team_content', label: '内容/脚本', value: 0.8 },
-  { code: 'team_account', label: '账号运营', value: 0.8 },
-  { code: 'team_customer', label: '私域/客服', value: 0.6 },
-  { code: 'team_sales', label: '销售/成交', value: 0.8 },
-  { code: 'team_ads', label: '投放/数据', value: 0.7 },
-  { code: 'team_solo', label: '暂无团队（单人）', value: 0.2 },
-];
-
-const supportOptions = [
-  { code: 'support_strategy', label: '策略定位', value: 0.8 },
-  { code: 'support_content', label: '内容/脚本', value: 0.8 },
-  { code: 'support_video', label: '短视频运营', value: 0.8 },
-  { code: 'support_sales', label: '销售成交', value: 0.8 },
-  { code: 'support_ops', label: '运营/团队', value: 0.8 },
-  { code: 'support_other', label: '其他', value: 0.5 },
+const revenueOptions = [
+  { label: '≥100万/月', value: 1 },
+  { label: '50万 - 100万', value: 0.8 },
+  { label: '20万 - 50万', value: 0.6 },
+  { label: '10万 - 20万', value: 0.4 },
+  { label: '<10万', value: 0.2 },
 ];
 
 export const questions: Question[] = [
@@ -149,7 +110,7 @@ export const questions: Question[] = [
   },
   {
     id: 'q3',
-    title: '过去12个月高客单复购或转介绍案例的稳定性？',
+    title: '过去12个月高客单案例的稳定性？',
     dimension: 'positioning',
     type: 'scale',
     weight: 1,
@@ -182,22 +143,14 @@ export const questions: Question[] = [
   },
   {
     id: 'q7',
-    title: '真实案例与客户见证素材储备量',
-    dimension: 'product',
-    type: 'single',
-    weight: 0.8,
-    options: caseOptions,
-  },
-  {
-    id: 'q8',
     title: '品牌故事主线是否已沉淀？',
-    dimension: 'content',
+    dimension: 'product',
     type: 'scale',
     weight: 0.9,
     options: scaleOptions(),
   },
   {
-    id: 'q9',
+    id: 'q8',
     title: '是否明确3-4个长期内容支柱？',
     dimension: 'content',
     type: 'boolean',
@@ -205,7 +158,7 @@ export const questions: Question[] = [
     options: yesNo,
   },
   {
-    id: 'q10',
+    id: 'q9',
     title: '近30天短视频输出频率',
     dimension: 'shortVideo',
     type: 'single',
@@ -213,15 +166,7 @@ export const questions: Question[] = [
     options: videoFrequency,
   },
   {
-    id: 'q11',
-    title: '账号视觉与简介是否匹配高客单定位？',
-    dimension: 'shortVideo',
-    type: 'scale',
-    weight: 0.8,
-    options: scaleOptions(),
-  },
-  {
-    id: 'q12',
+    id: 'q10',
     title: '短视频脚本是否有统一模板？',
     dimension: 'shortVideo',
     type: 'scale',
@@ -229,31 +174,15 @@ export const questions: Question[] = [
     options: scaleOptions(),
   },
   {
-    id: 'q13',
-    title: '是否进行受众调研来确定选题？',
-    dimension: 'shortVideo',
-    type: 'boolean',
-    weight: 0.7,
-    options: yesNo,
-  },
-  {
-    id: 'q14',
-    title: '完播/互动等核心指标的监控频率',
-    dimension: 'shortVideo',
-    type: 'single',
-    weight: 0.8,
-    options: frequencyOptions,
-  },
-  {
-    id: 'q15',
+    id: 'q11',
     title: '是否有测试-复盘-迭代机制？',
     dimension: 'shortVideo',
     type: 'scale',
-    weight: 0.9,
+    weight: 0.8,
     options: scaleOptions(),
   },
   {
-    id: 'q16',
+    id: 'q12',
     title: '引导留资与承接路径的清晰度',
     dimension: 'sales',
     type: 'single',
@@ -261,7 +190,7 @@ export const questions: Question[] = [
     options: leadOptions,
   },
   {
-    id: 'q17',
+    id: 'q13',
     title: '线索到私域的平均转化率',
     dimension: 'sales',
     type: 'single',
@@ -269,22 +198,7 @@ export const questions: Question[] = [
     options: conversionOptions,
   },
   {
-    id: 'q18',
-    title: '目前已搭建的私域阵地（多选）',
-    helper: '可多选：个人号/社群/企微/SaaS等',
-    dimension: 'sales',
-    type: 'multi',
-    weight: 0.8,
-    options: [
-      { code: 'priv_personal', label: '微信个人号', value: 0.8 },
-      { code: 'priv_groups', label: '微信群/社群', value: 0.7 },
-      { code: 'priv_enterprise', label: '企微矩阵', value: 1 },
-      { code: 'priv_miniapp', label: '表单/小程序', value: 0.7 },
-      { code: 'priv_none', label: '尚未搭建', value: 0.1 },
-    ],
-  },
-  {
-    id: 'q19',
+    id: 'q14',
     title: '是否有标准化私聊/面谈话术？',
     dimension: 'sales',
     type: 'scale',
@@ -292,7 +206,7 @@ export const questions: Question[] = [
     options: scaleOptions(),
   },
   {
-    id: 'q20',
+    id: 'q15',
     title: '电话或面谈的成交率',
     dimension: 'sales',
     type: 'single',
@@ -300,89 +214,20 @@ export const questions: Question[] = [
     options: conversionOptions,
   },
   {
-    id: 'q21',
-    title: '是否配置成交辅助物料（案例册/报价单/合约）？',
-    dimension: 'sales',
-    type: 'boolean',
-    weight: 0.7,
-    options: yesNo,
-  },
-  {
-    id: 'q22',
-    title: '交付后的满意度追踪与复购机制',
-    dimension: 'product',
-    type: 'scale',
-    weight: 0.8,
-    options: scaleOptions(),
-  },
-  {
-    id: 'q23',
-    title: '是否设置客户里程碑与阶段反馈？',
-    dimension: 'product',
-    type: 'boolean',
-    weight: 0.7,
-    options: yesNo,
-  },
-  {
-    id: 'q24',
-    title: '团队配置（可多选）',
-    dimension: 'operations',
-    type: 'multi',
-    weight: 0.8,
-    options: teamOptions,
-  },
-  {
-    id: 'q25',
-    title: '每月用于内容与投流的预算',
+    id: 'q16',
+    title: '当前月度营收区间？',
     dimension: 'operations',
     type: 'single',
-    weight: 0.8,
-    options: budgetOptions,
+    weight: 1,
+    options: revenueOptions,
   },
   {
-    id: 'q26',
-    title: '使用哪些数据看板追踪业务表现？',
-    dimension: 'operations',
-    type: 'single',
-    weight: 0.7,
-    options: dataToolOptions,
-  },
-  {
-    id: 'q27',
-    title: '复盘/对齐会议的节奏',
-    dimension: 'operations',
-    type: 'single',
-    weight: 0.7,
-    options: [
-      { label: '每周一次', value: 1 },
-      { label: '双周一次', value: 0.75 },
-      { label: '每月一次', value: 0.5 },
-      { label: '临时或无', value: 0.15 },
-    ],
-  },
-  {
-    id: 'q28',
-    title: '下季度营收与客单目标是否量化？',
-    dimension: 'operations',
-    type: 'scale',
-    weight: 0.7,
-    options: scaleOptions(),
-  },
-  {
-    id: 'q29',
+    id: 'q17',
     title: '当前自评的最大瓶颈是？',
     dimension: 'operations',
     type: 'text',
     weight: 0,
     placeholder: '简述最迫切需要突破的环节',
-  },
-  {
-    id: 'q30',
-    title: '希望获得的外部支持类型（可多选）',
-    dimension: 'operations',
-    type: 'multi',
-    weight: 0,
-    options: supportOptions,
   },
 ];
 
