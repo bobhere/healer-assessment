@@ -129,12 +129,13 @@ export const ResultPanel = ({ summary, questions, answers }: ResultPanelProps) =
 
   const withDesktopLayout = async (action: () => Promise<void>) => {
     const body = document.body;
-    const needsForce = body.classList.contains('mobile-adapt') && !body.classList.contains('force-desktop');
-    if (needsForce) body.classList.add('force-desktop');
+    const needsForce =
+      body.classList.contains('mobile-adapt') && !body.classList.contains('force-desktop');
+    if (needsForce) body.classList.add('force-desktop', 'export-grid');
     try {
       await action();
     } finally {
-      if (needsForce) body.classList.remove('force-desktop');
+      if (needsForce) body.classList.remove('force-desktop', 'export-grid');
     }
   };
 

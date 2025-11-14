@@ -945,6 +945,19 @@ body {
   grid-auto-flow: dense;
 }
 
+.export-grid .viz-grid,
+.export-grid .matrix-grid,
+.export-grid .timeline-card__flow,
+.export-grid .priority-dimension-grid {
+  grid-template-columns: 1fr;
+}
+.export-grid .viz-card,
+.export-grid .matrix-card,
+.export-grid .timeline-card,
+.export-grid .dimension-card {
+  min-height: auto;
+}
+
 .panel-block .timeline-card {
   margin-top: 0.5rem;
 }
