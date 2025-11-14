@@ -147,7 +147,7 @@ const scoreboardBuilders: Record<string, (record?: DerivedAnswer) => ScoreboardB
         badge: '成长型',
         tone: 'good',
         summary: '客单具备提升潜力，可通过组合权益提价。',
-        focus: '设计旗舰疗程+加速权益，形成两档报价支撑。',
+        focus: '设计旗舰方案+加速权益，形成两档报价支撑。',
       };
     }
     if (value >= 0.3) {
@@ -162,7 +162,7 @@ const scoreboardBuilders: Record<string, (record?: DerivedAnswer) => ScoreboardB
       badge: '入门期',
       tone: 'risk',
       summary: '目前报价偏低，难以支撑深度交付。',
-      focus: '聚焦一款高价值疗程，明确交付路径后再提升客单。',
+      focus: '聚焦一款高价值方案，明确交付路径后再提升客单。',
     };
   },
   q6: (record) => {
@@ -364,7 +364,7 @@ const detailBuilders: Record<string, (record?: DerivedAnswer) => DetailBuildResu
     return {
       tone: 'risk',
       summary: '交付完全靠本人实时发挥，难以复制也难以提价。',
-      actions: ['写下最理想的交付节奏（前测-疗程-复盘）并列出产出物。', '优先固化前测与复盘模板，两周内先完成文档化。'],
+      actions: ['写下最理想的交付节奏（前测-交付-复盘）并列出产出物。', '优先固化前测与复盘模板，两周内先完成文档化。'],
     };
   },
   q7: (record) => {
