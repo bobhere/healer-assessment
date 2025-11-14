@@ -13,6 +13,7 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const answers = useAssessmentStore((state) => state.answers);
   const summary = calculateScores(questions, answers);
+  const questionCount = questions.length;
 
   useEffect(() => {
     if (localStorage.getItem('healer-passcode') === 'granted') {
@@ -66,7 +67,7 @@ function App() {
       <header className="hero">
         <div>
           <p className="hero-eyebrow">疗愈师高客单增长诊断</p>
-          <h1>30问测评 · 明确定位、短视频与成交突破口</h1>
+          <h1>{questionCount}问测评 · 明确定位、短视频与成交突破口</h1>
           <p className="hero-subtitle">
             在电话沟通过程中逐题记录答案，系统会实时生成雷达图与行动建议，帮助疗愈师看清优势与短板。
           </p>
